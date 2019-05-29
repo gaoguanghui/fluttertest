@@ -20,6 +20,64 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
+      routes: <String, WidgetBuilder>{
+        // "/":(BuildContext context)=>new MyHomePage(),
+        "/home": (BuildContext context) =>
+            new Home(title: "the home"), //Home(title: "Home home"),
+      },
+    );
+  }
+}
+
+class Home extends StatefulWidget {
+  Home({Key key, this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _MyHomeState createState() => _MyHomeState();
+}
+
+class _MyHomeState extends State<Home> {
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text("button times:"),
+            Text(
+              "$_counter",
+              style: Theme.of(context).textTheme.display1,
+            ),
+            new FlatButton(
+              color: Colors.red,
+              child: Text("返回"),
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.pop(context, "返回");
+              },
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: "Increment",
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
@@ -52,6 +110,8 @@ class _MyHomePageState extends State<MyHomePage> {
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
+      Navigator.pushNamed(context, '/home');
+
       _counter++;
     });
   }
